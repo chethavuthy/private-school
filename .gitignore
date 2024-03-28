@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+dist-ssr
+*.local
+/dist
+dist
+package-lock.json
+components.d.ts
+pnpm-lock.yaml
