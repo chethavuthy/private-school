@@ -12,7 +12,7 @@ export const projectName = 'KH Poster'
 export default {
   theme: ThemeMode.LIGHT,
   sideTheme: SideTheme.WHITE,
-  themeColor: '#409eff',
+  themeColor: '#ff0008',
   layoutMode: LayoutMode.LTR,
   sideWidth: 210,
   deviceType: DeviceType.PC,

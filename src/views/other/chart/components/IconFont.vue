@@ -54,7 +54,7 @@
       padding-bottom: 0;
       transition: padding-bottom 0.2s ease-in-out;
       &:hover {
-        color: #409eff;
+        color: #ff0008;
         box-shadow: 0 0 10px #f0f0f0;
         padding-bottom: 22px;
         transition: padding-bottom 0.2s ease-in-out;
@@ -66,7 +66,7 @@
       }
       .copy {
         position: absolute;
-        background-color: #409eff;
+        background-color: #ff0008;
         padding: 5px 0;
         color: #fff;
         font-size: 12px;

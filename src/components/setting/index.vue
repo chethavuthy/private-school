@@ -58,7 +58,7 @@
       <n-divider dashed>主题颜色</n-divider>
       <n-grid class="colors-wrapper">
         <n-grid-item
-          v-for="(item, index) of primartyColorList"
+          v-for="(item, index) of primaryColorList"
           :key="index"
           :span="4"
           class="color-wrapper"
@@ -196,7 +196,12 @@
           tipText: '分栏',
         },
       ])
-      const primartyColorList = reactive([
+      const primaryColorList = reactive([
+        {
+          name: 'primary',
+          value: '#ff0008',
+          checked: true,
+        },
         {
           name: 'cyan',
           value: '#18a058',
@@ -205,7 +210,7 @@
         {
           name: 'blue',
           value: '#409eff',
-          checked: true,
+          checked: false,
         },
         {
           name: 'red',
@@ -316,7 +321,7 @@
         layoutExampleList.forEach((it) => {
           it.checked = appConfig.layoutMode === it.layoutId
         })
-        primartyColorList.forEach((it) => {
+        primaryColorList.forEach((it) => {
           it.checked = appConfig.themeColor === it.value
         })
       })
@@ -347,7 +352,7 @@
         appConfig.changeLayoutMode(item.layoutId)
       }
       function colorClick(item: any) {
-        primartyColorList.forEach((it) => {
+        primaryColorList.forEach((it) => {
           it.checked = it === item
         })
         appConfig.changePrimaryColor(item.value)
@@ -372,7 +377,7 @@
         themeList,
         sideExampleList,
         layoutExampleList,
-        primartyColorList,
+        primaryColorList,
         openDrawer,
         themeClick,
         exampleClick,

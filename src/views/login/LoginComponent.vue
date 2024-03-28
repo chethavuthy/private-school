@@ -2,15 +2,13 @@
   <n-el>
     <div class="flex login-container" v-if="!isMobileScreen">
       <div class="left">
-        <img :src="ImageBg1" />
-        <div class="content-wrapper">
-          <div class="logo-wrapper">
-            <img src="../../assets/logo.png" />
+        <div class="content-wrapper !bg-primary">
+          <div class="logo-wrapper !w-36">
+            <img src="../../assets/svg/logo.svg" />
           </div>
-          <div class="title">KH Poster</div>
-          <div class="sub-title">Vue3 + Vite2 + Typescript + Naive UI</div>
-          <div class="flex-1 flex justify-center items-center ttppii"> 生活，应该还有诗和远方 </div>
-          <div class="bottom-wrapper">KH Poster{{ version }} · Made by KH Poster</div>
+          <div class="sub-title">Designing in the cloud. Your ideas, everywhere.</div>
+          <div class="flex-1 flex justify-center items-center ttppii"> Design smarter, not harder </div>
+          <div class="bottom-wrapper">KH Poster v{{ version }} · Made by KH Poster</div>
         </div>
       </div>
       <div class="right">
@@ -34,20 +32,6 @@
               <a :underline="false" type="primary">忘记密码？</a>
             </div>
           </div>
-        </div>
-        <div class="third-login">
-          <n-divider dashed>第三方登录</n-divider>
-          <n-space justify="center">
-            <n-icon color="var(--primary-color)" size="20">
-              <LogoAlipay />
-            </n-icon>
-            <n-icon color="var(--primary-color)" size="20">
-              <LogoGithub />
-            </n-icon>
-            <n-icon color="var(--primary-color)" size="20">
-              <LogoWechat />
-            </n-icon>
-          </n-space>
         </div>
       </div>
     </div>
@@ -101,7 +85,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import ImageBg1 from '@/assets/img_login_bg.png'
 import { post, Response } from '@/api/http'
 import { login } from '@/api/url'
 import { DeviceType, UserState } from '@/store/types'
@@ -165,7 +148,6 @@ export default defineComponent({
       autoLogin,
       loading,
       onLogin,
-      ImageBg1,
       version,
     }
   },

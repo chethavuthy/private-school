@@ -112,7 +112,7 @@
           {
             title: '小间距',
             margin: 10,
-            lightColor: '#409eff',
+            lightColor: '#ff0008',
             darkColor: '',
           },
         ].forEach(generatorCode)

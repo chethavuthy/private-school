@@ -1,6 +1,6 @@
 <template>
-  <div class="logo-wrapper">
-    <img v-if="showLogo" class="logo-img" src="../../assets/logo.png" />
+  <div class="logo-wrapper !gap-2">
+    <img v-if="showLogo" class="logo-img" src="../../assets/svg/logo-sq.svg" />
     <div
       v-if="showTitle"
       :class="[!appConfig.isCollapse || alwaysShow ? 'show-title' : 'close-title']"
