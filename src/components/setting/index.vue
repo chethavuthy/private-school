@@ -1,7 +1,7 @@
 <template>
   <n-drawer v-model:show="opened" placement="right" :auto-focus="false">
-    <n-drawer-content title="系统设置" closable class="wrapper">
-      <n-divider dashed>主题设置</n-divider>
+    <n-drawer-content title="System Settings" closable class="wrapper">
+      <n-divider dashed>Theme</n-divider>
       <n-grid>
         <n-grid-item
           v-for="(item, index) of themeList"
@@ -19,7 +19,7 @@
           />
         </n-grid-item>
       </n-grid>
-      <n-divider dashed>侧边栏样式</n-divider>
+      <n-divider dashed>Sidebar</n-divider>
       <n-grid>
         <n-grid-item
           v-for="(item, index) of sideExampleList"
@@ -36,7 +36,7 @@
           />
         </n-grid-item>
       </n-grid>
-      <n-divider dashed>布局模式</n-divider>
+      <n-divider dashed>Layout</n-divider>
       <n-grid>
         <n-grid-item
           v-for="(item, index) of layoutExampleList"
@@ -134,7 +134,7 @@
           rightBottomBg: '#f5f5f5',
           checked: false,
           themeId: 'light',
-          tipText: '明亮',
+          tipText: 'Light',
         },
         {
           leftBg: '#000000',
@@ -142,7 +142,7 @@
           rightBottomBg: '#333333',
           checked: false,
           themeId: 'dark',
-          tipText: '暗黑',
+          tipText: 'Dark',
         },
       ])
       const sideExampleList = reactive([
@@ -175,7 +175,7 @@
           rightBottomBg: '#d4d4d4',
           checked: true,
           layoutId: 'ltr',
-          tipText: '左右',
+          tipText: 'Left Collapse',
         },
         {
           leftBg: '#d4d4d4',
@@ -184,7 +184,7 @@
           checked: false,
           layoutId: 'ttb',
           class: 'extra-class',
-          tipText: '上下',
+          tipText: 'Up Down',
         },
         {
           leftBg: '#000000',
@@ -193,7 +193,7 @@
           checked: false,
           layoutId: 'lcr',
           class: 'extra-class-1',
-          tipText: '分栏',
+          tipText: 'Left Column',
         },
       ])
       const primaryColorList = reactive([

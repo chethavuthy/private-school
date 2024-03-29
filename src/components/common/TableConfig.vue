@@ -2,7 +2,7 @@
   <n-space align="center">
     <n-checkbox v-model:checked="border" @update-checked="updateBorder">表格边框</n-checkbox>
     <n-tooltip class="item" trigger="hover" placement="top">
-      刷新页面
+      Refresh page
       <template #trigger>
         <n-button circle type="warning" size="small" @click="doRefresh">
           <template #icon>

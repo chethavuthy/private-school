@@ -30,16 +30,16 @@
       const userStore = useUserStore()
       const router = useRouter()
       const options = [
+        // {
+        //   label: '个人中心',
+        //   key: 'personal-center',
+        //   icon: () =>
+        //     h(NIcon, null, {
+        //       default: () => h(Menu),
+        //     }),
+        // },
         {
-          label: '个人中心',
-          key: 'personal-center',
-          icon: () =>
-            h(NIcon, null, {
-              default: () => h(Menu),
-            }),
-        },
-        {
-          label: '退出登录',
+          label: 'Logout',
           key: 'logout',
           icon: () =>
             h(NIcon, null, {
@@ -53,10 +53,10 @@
       const dialog = useDialog()
       function logout() {
         dialog.warning({
-          title: '提示',
-          content: '是否要退出当前账号？',
-          positiveText: '退出',
-          negativeText: '再想想',
+          title: 'Logout',
+          content: 'Do you want to log out?',
+          positiveText: 'Logout',
+          negativeText: 'Close',
           onPositiveClick: () => {
             userStore.logout().then(() => {
               window.location.reload()

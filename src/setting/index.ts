@@ -20,8 +20,8 @@ export default {
   isFixedNavBar: true,
   isCollapse: false,
   actionBar: {
-    isShowSearch: true,
-    isShowMessage: true,
+    isShowSearch: false,
+    isShowMessage: false,
     isShowRefresh: true,
     isShowFullScreen: true,
   },

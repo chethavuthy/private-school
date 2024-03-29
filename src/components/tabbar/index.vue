@@ -55,7 +55,7 @@
               <Refresh />
             </n-icon>
           </template>
-          刷新页面
+          Refresh page
         </n-button>
       </li>
       <li :disabled="showLeftMenu">
@@ -84,7 +84,7 @@
               <Close />
             </n-icon>
           </template>
-          关闭所有
+          Close all
         </n-button>
       </li>
     </ul>
@@ -116,7 +116,7 @@
         leftArrowDisabled: false,
         contextMenuOptions: [
           {
-            label: '刷新页面',
+            label: 'Refresh page',
             key: 'refresh',
             icon() {
               return h(NIcon, null, {
@@ -125,7 +125,7 @@
             },
           },
           {
-            label: '关闭所有',
+            label: 'Close all',
             key: 'close',
             icon() {
               return h(NIcon, null, {
