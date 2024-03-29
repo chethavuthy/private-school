@@ -88,9 +88,9 @@ Mock.mock(RegExp(getRoleList), 'post', function () {
     data: [
       {
         id: 1,
-        name: '超级管理员',
+        name: 'Super Admin',
         roleCode: 'ROLE_admin',
-        description: '超级管理员',
+        description: 'Super Admin',
         createTime: Random.now('yyyy-MM-dd HH:mm:ss'),
       },
       {

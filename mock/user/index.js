@@ -10,7 +10,7 @@ Mock.mock(RegExp(login), 'post', function (options) {
   if (username === 'admin') {
     baseData.code = 200
     baseData.msg = '登录成功'
-    data.nickName = '超级管理员'
+    data.nickName = 'Super Admin'
     data.userName = 'admin'
     data.userId = 1
     data.roleId = 1
@@ -19,7 +19,7 @@ Mock.mock(RegExp(login), 'post', function (options) {
       {
         roleCode: 'ROLE_admin',
         roleId: 1,
-        roleName: '超级管理员',
+        roleName: 'Super Admin',
       },
     ]
     baseData.data = data
