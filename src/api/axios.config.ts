@@ -1,7 +1,7 @@
 import Axios, { AxiosResponse } from 'axios'
 import qs from 'qs'
 
-export const baseURL = 'http://localhost:8080/'
+export const baseURL = import.meta.env.VITE_API_BASE_URL as string
 
 export const CONTENT_TYPE = 'Content-Type'
 
@@ -34,17 +34,18 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
-    if (response.status === 200) {
-      return response
-    } else {
-      throw new Error(response.status.toString())
-    }
+    return response
   },
   (error) => {
     if (import.meta.env.MODE === 'development') {
       console.log(error)
     }
-    return Promise.reject({ code: 500, msg: '服务器异常，请稍后重试…' })
+
+    const msg = Array.isArray(error?.response?.data?.message)
+      ? error?.response?.data?.message.join(', ')
+      : error?.response?.data?.message
+
+    return Promise.reject({ code: error?.response?.status, msg: msg || 'Internal server error' })
   }
 )
 

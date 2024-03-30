@@ -9,22 +9,20 @@ const defaultAvatar = Avatar
 const useUserStore = defineStore('user-info', {
   state: () => {
     return {
-      userId: 0,
-      roleId: 0,
       token: '',
-      userName: '',
-      nickName: '',
+      accessToken: '',
+      refreshToken: '',
+      refreshTokenExpired: '',
       avatar: defaultAvatar,
     }
   },
   actions: {
     saveUser(userInfo: UserState) {
       return new Promise<UserState>((resolve) => {
-        this.userId = userInfo.userId
-        this.roleId = userInfo.roleId
-        this.token = userInfo.token
-        this.userName = userInfo.userName
-        this.nickName = userInfo.nickName
+        this.token = userInfo.accessToken
+        this.accessToken = userInfo.accessToken
+        this.refreshToken = userInfo.refreshToken
+        this.refreshTokenExpired = userInfo.refreshTokenExpired
         this.avatar = userInfo.avatar || defaultAvatar
         resolve(userInfo)
       })

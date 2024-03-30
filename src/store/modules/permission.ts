@@ -28,28 +28,11 @@ const usePermissionStore = defineStore('permission-route', {
   },
   actions: {
     async getRoutes(data: { userId: number; roleId: number }) {
-      try {
-        if (getMenuListByRoleId) {
-          const res = await post({
-            url: baseAddress + getMenuListByRoleId,
-            // 在实际的开发中，这个地方可以换成 token，让后端解析用户信息获取 userId 和 roleId，前端可以不用传 userId 和 roleId。
-            // 这样可以增加安全性
-            data,
-          })
-          return generatorRoutes(res.data)
-        } else {
-          return generatorRoutes(defaultRoutes)
-        }
-      } catch (error) {
-        console.log(
-          '路由加载失败了，请清空一下Cookie和localStorage，重新登录；如果已经采用真实接口的，请确保菜单接口地址真实可用并且返回的数据格式和mock中的一样'
-        )
-        return []
-      }
+      return generatorRoutes(defaultRoutes)
     },
     async initPermissionRoute() {
       const userStore = useUserStore()
-      // 加载路由
+      // Load routes
       const accessRoutes = await this.getRoutes({
         roleId: userStore.roleId,
         userId: userStore.userId,
@@ -58,7 +41,7 @@ const usePermissionStore = defineStore('permission-route', {
       mapRoutes.forEach((it: any) => {
         router.addRoute(it)
       })
-      // 配置 `/` 路由的默认跳转地址
+      // Default
       router.addRoute({
         path: '/',
         redirect: findRootPathRoute(accessRoutes),
@@ -66,7 +49,7 @@ const usePermissionStore = defineStore('permission-route', {
           hidden: true,
         },
       })
-      // 这个路由一定要放在最后
+      // This route must be placed at the end
       router.addRoute({
         path: '/:pathMatch(.*)*',
         redirect: '/404',

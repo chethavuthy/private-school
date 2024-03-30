@@ -18,8 +18,8 @@
           <div class="form-title">Account Login</div>
           <div class="item-wrapper">
             <n-input
-              v-model:value="username"
-              placeholder="请输入用户名/手机号"
+              v-model:value="email"
+              placeholder="Please enter your email"
               prefix-icon="el-icon-user"
               clearable
             />
@@ -27,7 +27,7 @@
           <div class="mt-4 item-wrapper">
             <n-input
               v-model:value="password"
-              placeholder="请输入密码"
+              placeholder="Please enter your password"
               type="password"
               clearable
               prefix-icon="el-icon-lock"
@@ -53,7 +53,7 @@
         <div class="mt-4 text-lg font-bold text-white"> Kh Poster </div>
       </div>
       <div class="content">
-        <n-input round placeholder="请输入用户名/手机号" size="large" v-model:value="username">
+        <n-input round placeholder="请输入用户名/手机号" size="large" v-model:value="email">
           <template #prefix>
             <n-icon>
               <PhoneIcon />
@@ -63,7 +63,7 @@
         <n-input
           class="mt-10"
           round
-          placeholder="请输入密码"
+          placeholder="Please enter password"
           size="large"
           v-model:value="password"
           type="password"
@@ -81,21 +81,6 @@
         </n-button>
         <div class="flex justify-between mt-4">
           <n-checkbox v-model:checked="autoLogin" color="#fff">Remember</n-checkbox>
-          <!-- <a class="text-white" type="primary">忘记密码？</a> -->
-        </div>
-      </div>
-      <div class="footer">
-        <n-divider>第三方登录</n-divider>
-        <div class="flex justify-evenly">
-          <n-icon color="#c3c3c3" size="30">
-            <LogoAlipay />
-          </n-icon>
-          <n-icon color="#c3c3c3" size="30">
-            <LogoGithub />
-          </n-icon>
-          <n-icon color="#c3c3c3" size="30">
-            <LogoWechat />
-          </n-icon>
         </div>
       </div>
     </div>
@@ -106,7 +91,7 @@
   import { computed, defineComponent, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { post, Response } from '@/api/http'
-  import { login } from '@/api/url'
+  import { SystemUser } from '@/api/url'
   import { DeviceType, UserState } from '@/store/types'
   import { useMessage } from 'naive-ui'
   import {
@@ -124,8 +109,8 @@
     components: { PhoneIcon, PasswordIcon, LogoGithub, LogoAlipay, LogoWechat },
     setup() {
       const { version } = useAppInfo()
-      const username = ref('admin')
-      const password = ref('123456')
+      const email = ref('')
+      const password = ref('')
       const autoLogin = ref(true)
       const loading = ref(false)
       const router = useRouter()
@@ -139,9 +124,9 @@
       const onLogin = () => {
         loading.value = true
         post({
-          url: login,
+          url: SystemUser.login,
           data: {
-            username: username.value,
+            email: email.value,
             password: password.value,
           },
         })
@@ -157,13 +142,15 @@
             })
           })
           .catch((error) => {
-            loading.value = false
             message.error(error.message)
+          })
+          .finally(() => {
+            loading.value = false
           })
       }
       return {
         isMobileScreen,
-        username,
+        email,
         password,
         autoLogin,
         loading,

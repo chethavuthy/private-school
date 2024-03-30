@@ -2,6 +2,15 @@ import { baseURL } from './axios.config'
 
 export const baseAddress = baseURL
 
+export const SystemUser = {
+  create: '/system-user/create',
+  login: '/system-user/login',
+  list: '/system-user/list',
+  delete: '/system-user/delete',
+  update: '/system-user/update',
+  get: '/system-user',
+}
+
 export const test = '/test'
 
 export const login = '/login'

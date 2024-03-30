@@ -33,13 +33,9 @@ export enum PageAnim {
 }
 
 export interface UserState {
-  userId: number
-  token: string
-  roleId: number
-  roles: string[] | null
-  userName: string
-  nickName: string
-  avatar: string
+  accessToken: string
+  refreshToken: string
+  refreshTokenExpired: string
 }
 
 export interface AppConfigState {

@@ -20,14 +20,11 @@ export interface Response<T = any> {
 
 function http<T = any>({ url, data, method, headers, beforeRequest, afterRequest }: HttpOption) {
   const successHandler = (res: AxiosResponse<Response<T>>) => {
-    if (res.data.code === 200) {
-      return res.data
-    }
-    throw new Error(res.data.msg || '请求失败，未知异常')
+    return res.data
   }
   const failHandler = (error: Response<Error>) => {
     afterRequest && afterRequest()
-    throw new Error(error.msg || '请求失败，未知异常')
+    throw new Error(error.msg || 'Request failed with unknown exception!')
   }
   beforeRequest && beforeRequest()
   method = method || 'GET'
@@ -61,6 +58,43 @@ export function post<T = any>({
   beforeRequest,
   afterRequest,
 }: HttpOption): Promise<Response<T>> {
+  console.log('url', url)
+  return http<T>({
+    url,
+    method,
+    data,
+    headers,
+    beforeRequest,
+    afterRequest,
+  })
+}
+
+export function put<T = any>({
+  url,
+  data,
+  method = 'PUT',
+  headers,
+  beforeRequest,
+  afterRequest,
+}: HttpOption): Promise<Response<T>> {
+  return http<T>({
+    url,
+    method,
+    data,
+    headers,
+    beforeRequest,
+    afterRequest,
+  })
+}
+
+export function del<T = any>({
+  url,
+  data,
+  method = 'DELETE',
+  headers,
+  beforeRequest,
+  afterRequest,
+}: HttpOption): Promise<Response<T>> {
   return http<T>({
     url,
     method,
@@ -77,10 +111,16 @@ function install(app: App): void {
   app.config.globalProperties.$get = get
 
   app.config.globalProperties.$post = post
+
+  app.config.globalProperties.$put = put
+
+  app.config.globalProperties.$del = del
 }
 
 export default {
   install,
   get,
   post,
+  put,
+  del,
 }

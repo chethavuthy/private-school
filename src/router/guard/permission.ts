@@ -18,6 +18,7 @@ function usePermissionGuard() {
     }
     const permissionStore = usePermissionStore()
     const isEmptyRoute = permissionStore.isEmptyPermissionRoute()
+
     if (isEmptyRoute) {
       await permissionStore.initPermissionRoute()
       return { ...to, replace: true }
