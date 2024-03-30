@@ -8,7 +8,7 @@
           </div>
           <div class="sub-title">Designing in the cloud. Your ideas, everywhere.</div>
           <div class="flex-1 flex justify-center items-center ttppii">
-            Design smarter, not harder
+            Design smarter, not harder.
           </div>
           <div class="bottom-wrapper">KH Poster v{{ version }} · Made by KH Poster</div>
         </div>
