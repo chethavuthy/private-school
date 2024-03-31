@@ -176,7 +176,7 @@
             title: 'Role',
             key: 'role',
             render: (rowData) => {
-              return h('div', rowData.role.title)
+              return h('div', rowData?.role?.title ?? 'N/A')
             },
           },
           {
