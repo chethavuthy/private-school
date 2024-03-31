@@ -43,6 +43,11 @@ export const Role = {
   GET: '/role',
 }
 
+export const Banner = {
+  CREATE: '/banner/admin/create',
+  LIST: '/banner/admin/list',
+}
+
 export const test = '/test'
 
 export const login = '/login'
