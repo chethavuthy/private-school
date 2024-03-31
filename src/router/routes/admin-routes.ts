@@ -32,6 +32,22 @@ export const adminRoutes = [
     ],
   },
   {
+    menuUrl: '/banner',
+    menuName: 'Banner',
+    iconPrefix: 'iconfont',
+    icon: 'image',
+    parentPath: '',
+    isSingle: true,
+    children: [
+      {
+        parentPath: '/banner',
+        menuUrl: '/banner/home',
+        menuName: 'Banner',
+        routeName: 'BannerHome',
+      },
+    ],
+  },
+  {
     menuUrl: '/category',
     menuName: 'Category',
     iconPrefix: 'iconfont',
