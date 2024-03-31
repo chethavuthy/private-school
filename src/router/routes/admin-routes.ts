@@ -51,7 +51,7 @@ export const adminRoutes = [
     menuUrl: '/business-type',
     menuName: 'Business Type',
     iconPrefix: 'iconfont',
-    icon: 'gift',
+    icon: 'wallet',
     parentPath: '',
     isSingle: true,
     children: [
@@ -59,7 +59,23 @@ export const adminRoutes = [
         parentPath: '/business-type',
         menuUrl: '/business-type/home',
         menuName: 'Business Type',
-        routeName: 'BusinessType',
+        routeName: 'BusinessTypeHome',
+      },
+    ],
+  },
+  {
+    menuUrl: '/role',
+    menuName: 'Role',
+    iconPrefix: 'iconfont',
+    icon: 'folder-view',
+    parentPath: '',
+    isSingle: true,
+    children: [
+      {
+        parentPath: '/role',
+        menuUrl: '/role/home',
+        menuName: 'Role',
+        routeName: 'RoleHome',
       },
     ],
   },
