@@ -5,7 +5,7 @@
         <AddIcon />
       </n-icon>
     </template>
-    添加
+    Add
   </n-button>
 </template>
 

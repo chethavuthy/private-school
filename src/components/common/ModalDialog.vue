@@ -21,8 +21,10 @@
     <template #footer>
       <div class="flex justify-end">
         <n-space>
-          <n-button type="default" size="small" @click="onCancel">取消</n-button>
-          <n-button type="primary" size="small" @click="onConfirm">确定</n-button>
+          <n-button type="default" size="small" @click="onCancel">Cancel</n-button>
+          <n-button type="primary" size="small" @click="onConfirm" :loading="loading">
+            Confirm
+          </n-button>
         </n-space>
       </div>
     </template>
@@ -49,6 +51,7 @@
     },
     emits: ['confirm', 'cancel'],
     setup(props, { emit }) {
+      const loading = ref(false)
       const showModal = ref(false)
       const appConfig = useAppConfigStore()
       const header = ref<HTMLElement | null>()
@@ -60,6 +63,7 @@
         footer: 'soft',
       }
       function toggle() {
+        loading.value = false
         showModal.value = !showModal.value
         return Promise.resolve(showModal.value)
       }
@@ -71,7 +75,9 @@
         showModal.value = false
         return Promise.resolve(false)
       }
-      function onConfirm() {
+      async function onConfirm() {
+        loading.value = true
+        await nextTick() // Wait for the loading state to be reflected in the UI
         emit('confirm')
       }
       function onCancel() {
@@ -105,6 +111,7 @@
         onConfirm,
         onCancel,
         segmented,
+        loading,
       }
     },
   })

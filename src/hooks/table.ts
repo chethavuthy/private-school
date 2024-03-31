@@ -60,7 +60,6 @@ export const useTable = function <T = any>(): Table<T> {
   const handleSuccess = ({ data = [] }: { data: T[] }): Promise<T[]> => {
     tableLoading.value = false
     dataList.value = Array.isArray(data) ? data : data?.items
-    console.log(data)
     return Promise.resolve(data)
   }
   const handleSelectionChange = (tempSelectRows: Array<string | number>) => {

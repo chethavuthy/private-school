@@ -1,6 +1,18 @@
 import { MessageApi, TreeSelectOption } from 'naive-ui'
 import { Ref, VNode } from 'vue'
 
+export enum FormAction {
+  ADD = 'Add',
+  EDIT = 'Edit',
+  DELETE = 'Delete',
+}
+
+export const DoneAction = {
+  Add: 'Added',
+  Edit: 'Edited',
+  Delete: 'Deleted',
+}
+
 export interface HeaderCellStyle {
   backgroundColor?: string
   color: string

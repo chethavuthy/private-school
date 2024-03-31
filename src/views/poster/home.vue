@@ -130,55 +130,6 @@
         })
       },
     },
-    // {
-    //   key: 'checkbox',
-    //   label: '复选',
-    //   value: ref(null),
-    //   optionItems: [
-    //     {
-    //       label: '选项1',
-    //       value: 0,
-    //     },
-    //     {
-    //       label: '选项2',
-    //       value: 1,
-    //     },
-    //   ],
-    //   render: (formItem) => {
-    //     return h(
-    //       NCheckboxGroup,
-    //       {
-    //         options: formItem.optionItems as Array<SelectOption>,
-    //         value: formItem.value.value,
-    //         placeholder: '请选择用户姓别',
-    //         onUpdateValue: (val) => {
-    //           formItem.value.value = val
-    //         },
-    //       },
-    //       {
-    //         default: () => {
-    //           return h(
-    //             NSpace,
-    //             {
-    //               itemStyle: 'display: flex;',
-    //             },
-    //             {
-    //               default: () => {
-    //                 return formItem.optionItems?.map((it) => {
-    //                   return h(NCheckbox, {
-    //                     key: it.value,
-    //                     label: it.label,
-    //                     value: it.value,
-    //                   })
-    //                 })
-    //               },
-    //             }
-    //           )
-    //         },
-    //       }
-    //     )
-    //   },
-    // },
   ]
   export default defineComponent({
     name: 'PosterHome',
@@ -191,7 +142,7 @@
       const rowKey = useRowKey('id')
       const tableColumns = useTableColumn(
         [
-          table.selectionColumn,
+          // table.selectionColumn,
           table.indexColumn,
           {
             title: 'Name',
@@ -211,45 +162,6 @@
               return h('div', new Date(rowData.createdAt).toLocaleString())
             },
           },
-          // {
-          //   title: 'Status',
-          //   key: 'status',
-          //   width: 80,
-          //   render: (rowData) => {
-          //     return h('div', rowData.gender === 0 ? 'Approve' : 'Reject')
-          //   },
-          // },
-          // {
-          //   title: '头像',
-          //   key: 'avatar',
-          //   render: (rowData: any) => {
-          //     return h(
-          //       NAvatar,
-          //       {
-          //         circle: true,
-          //         size: 'small',
-          //       },
-          //       { default: () => rowData.nickName.substring(0, 1) }
-          //     )
-          //   },
-          // },
-          // {
-          //   title: '地址',
-          //   key: 'address',
-          // },
-          // {
-          //   title: '名称',
-          //   key: 'nickName',
-          // },
-          // {
-          //   title: '上次登录时间',
-          //   key: 'lastLoginTime',
-          //   width: 180,
-          // },
-          // {
-          //   title: '上次登录IP',
-          //   key: 'lastLoginIp',
-          // },
           {
             title: 'Status',
             key: 'status',

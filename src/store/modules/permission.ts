@@ -55,8 +55,6 @@ const usePermissionStore = defineStore('permission-route', {
           hidden: true,
         },
       })
-      console.log('constantRoutes', constantRoutes)
-      console.log('accessRoutes', accessRoutes)
 
       this.permissionRoutes = [...constantRoutes, ...accessRoutes]
     },

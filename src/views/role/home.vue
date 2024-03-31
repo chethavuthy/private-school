@@ -202,7 +202,7 @@
       const rowKey = useRowKey('id')
       const tableColumns = useTableColumn(
         [
-          table.selectionColumn,
+          // table.selectionColumn,
           table.indexColumn,
           {
             title: 'Title',
@@ -212,7 +212,6 @@
             title: 'Permission',
             key: 'permission',
             render: (rowData) =>
-              // loop render tags
               h(
                 NSpace,
                 {
@@ -244,54 +243,6 @@
               return h('div', new Date(rowData.createdAt).toLocaleString())
             },
           },
-          // {
-          //   title: 'Status',
-          //   key: 'status',
-          //   width: 80,
-          //   render: (rowData) => {
-          //     return h('div', rowData.gender === 0 ? 'Approve' : 'Reject')
-          //   },
-          // },
-          // {
-          //   title: '头像',
-          //   key: 'avatar',
-          //   render: (rowData: any) => {
-          //     return h(
-          //       NAvatar,
-          //       {
-          //         circle: true,
-          //         size: 'small',
-          //       },
-          //       { default: () => rowData.nickName.substring(0, 1) }
-          //     )
-          //   },
-          // },
-          // {
-          //   title: '地址',
-          //   key: 'address',
-          // },
-          // {
-          //   title: '名称',
-          //   key: 'nickName',
-          // },
-          // {
-          //   title: '上次登录时间',
-          //   key: 'lastLoginTime',
-          //   width: 180,
-          // },
-          // {
-          //   title: '上次登录IP',
-          //   key: 'lastLoginIp',
-          // },
-          // {
-          //   title: 'Status',
-          //   key: 'status',
-          //   render: (rowData) =>
-          //     renderTag(!!rowData.status ? 'Approve' : 'Reject', {
-          //       type: !!rowData.status ? 'success' : 'error',
-          //       size: 'small',
-          //     }),
-          // },
         ],
         {
           align: 'center',

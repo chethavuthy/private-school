@@ -135,7 +135,7 @@
     setup() {
       const table = useTable<Department>()
       const message = useMessage()
-      const naiveDailog = useDialog()
+      const naiveDialog = useDialog()
       const tableColumns = useTableColumn(
         [
           {
@@ -212,7 +212,7 @@
         }
       }
       const onDeleteItem = (item: any) => {
-        naiveDailog.warning({
+        naiveDialog.warning({
           title: '提示',
           content: '确定要删除此信息，删除后不可恢复？',
           positiveText: '删除',
@@ -231,7 +231,7 @@
       function onDataFormConfirm() {
         if (itemDataFormRef.value?.validator()) {
           modalDialog.value?.toggle()
-          naiveDailog.success({
+          naiveDialog.success({
             title: '提示',
             positiveText: '确定',
             content:

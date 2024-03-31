@@ -11,7 +11,7 @@
           <slot name="table-config"></slot>
           <n-tooltip class="ml-2 mr-2" trigger="hover" v-if="showFilter">
             <template #trigger>
-              <n-button type="warning" size="tiny" @click="showSearchContent = !showSearchContent">
+              <n-button type="warning" size="small" @click="showSearchContent = !showSearchContent">
                 <template #icon>
                   <n-icon>
                     <FilterIcon />

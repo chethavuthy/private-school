@@ -84,12 +84,12 @@
       const departmentChart = ref<InstanceType<typeof DepartmentChart>>()
       const onResize = () => {
         setTimeout(() => {
-          mOrderChart.value?.updateChart()
-          salesChart.value?.updateChart()
-          enrollmentChannelsChart.value?.updateChart()
-          studentChart.value?.updateChart()
-          fullYearSalesChart.value?.updateChart()
-          departmentChart.value?.updateChart()
+          mOrderChart.value?.updateChart?.()
+          salesChart.value?.updateChart?.()
+          enrollmentChannelsChart.value?.updateChart?.()
+          studentChart.value?.updateChart?.()
+          fullYearSalesChart.value?.updateChart?.()
+          departmentChart.value?.updateChart?.()
         }, 500)
       }
       const collapse = computed(() => {
