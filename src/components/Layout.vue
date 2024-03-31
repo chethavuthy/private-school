@@ -1,10 +1,5 @@
 <template>
-  <n-config-provider
-    :theme-overrides="themeOverrides"
-    :theme="theme"
-    :locale="zhCN"
-    style="height: 100%"
-  >
+  <n-config-provider :theme-overrides="themeOverrides" :theme="theme" style="height: 100%">
     <n-global-style />
     <n-loading-bar-provider>
       <n-dialog-provider>
