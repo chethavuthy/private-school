@@ -6,7 +6,7 @@
           <n-avatar circle size="small" :src="userStore.avatar" />
         </div>
         <span class="nick-name">
-          {{ userStore.nickName }}
+          <!-- {{ userStore.nickName }} -->
           <n-icon class="tip">
             <CaretDownSharp />
           </n-icon>

@@ -1,12 +1,9 @@
-import { adminRoutes } from '../../../mock/router/index.js'
 import { RouteRecordRaw } from 'vue-router'
 import { defineStore } from 'pinia'
-import useUserStore from './user'
 import router from '@/router'
-import { post } from '@/api/http'
-import defaultRoutes from '@/router/routes/default-routes'
 import { findRootPathRoute, generatorRoutes, mapTwoLevelRouter } from '../help'
 import { constantRoutes } from '@/router/routes/constants'
+import { adminRoutes } from '@/router/routes/admin-routes'
 
 const usePermissionStore = defineStore('permission-route', {
   state: () => {
@@ -27,23 +24,17 @@ const usePermissionStore = defineStore('permission-route', {
     },
   },
   actions: {
-    async getRoutes(data: { userId: number; roleId: number }) {
+    async getRoutes() {
       try {
         return generatorRoutes(adminRoutes)
       } catch (error) {
-        console.log(
-          '路由加载失败了，请清空一下Cookie和localStorage，重新登录；如果已经采用真实接口的，请确保菜单接口地址真实可用并且返回的数据格式和mock中的一样'
-        )
+        console.log('Route loading failed')
         return []
       }
     },
     async initPermissionRoute() {
-      const userStore = useUserStore()
       // Load routes
-      const accessRoutes = await this.getRoutes({
-        roleId: userStore.roleId,
-        userId: userStore.userId,
-      })
+      const accessRoutes = await this.getRoutes()
       const mapRoutes = mapTwoLevelRouter(accessRoutes)
       mapRoutes.forEach((it: any) => {
         router.addRoute(it)
@@ -64,6 +55,9 @@ const usePermissionStore = defineStore('permission-route', {
           hidden: true,
         },
       })
+      console.log('constantRoutes', constantRoutes)
+      console.log('accessRoutes', accessRoutes)
+
       this.permissionRoutes = [...constantRoutes, ...accessRoutes]
     },
     isEmptyPermissionRoute() {

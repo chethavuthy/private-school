@@ -17,10 +17,10 @@
                     <FilterIcon />
                   </n-icon>
                 </template>
-                筛选条件
+                Filter
               </n-button>
             </template>
-            展开筛选条件
+            Expand
           </n-tooltip>
           <slot name="top-right"></slot>
         </n-space>
@@ -35,7 +35,7 @@
   >
     <n-drawer-content
       body-content-style="overflow: hidden"
-      title="搜索条件"
+      title="Search"
       closable
       header-style="font-size: 16px; padding: 15px"
     >
@@ -45,9 +45,9 @@
       <template #footer>
         <div class="flex justify-end">
           <n-space>
-            <n-button type="warning" size="small" @click="doResetSearch">重置</n-button>
-            <n-button type="primary" size="small" @click="doSearch">搜索</n-button>
-            <n-button type="info" size="small" @click="showSearchContent = false">关闭</n-button>
+            <n-button type="warning" size="small" @click="doResetSearch">Reset</n-button>
+            <n-button type="primary" size="small" @click="doSearch">Search</n-button>
+            <n-button type="info" size="small" @click="showSearchContent = false">Close</n-button>
           </n-space>
         </div>
       </template>

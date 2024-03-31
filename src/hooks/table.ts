@@ -35,7 +35,7 @@ export const useTableHeight = async function (): Promise<number> {
   return new Promise((resolve) => {
     setTimeout(() => {
       let tempHeight = 0
-      const header = document.getElementById('tableHeaderContainer')      
+      const header = document.getElementById('tableHeaderContainer')
       if (header) {
         tempHeight += header.clientHeight
       }
@@ -59,7 +59,8 @@ export const useTable = function <T = any>(): Table<T> {
   const tableLoading = ref(true)
   const handleSuccess = ({ data = [] }: { data: T[] }): Promise<T[]> => {
     tableLoading.value = false
-    dataList.value = data
+    dataList.value = Array.isArray(data) ? data : data?.items
+    console.log(data)
     return Promise.resolve(data)
   }
   const handleSelectionChange = (tempSelectRows: Array<string | number>) => {
@@ -118,7 +119,7 @@ export const useTableColumn = function (columns: DataTableColumn[], options?: Da
 
 export const useTableIndexColumn = function () {
   return {
-    title: '序号',
+    title: 'No',
     key: 'index',
     width: 80,
     render: (rowData: any, rowIndex: number) => {

@@ -36,6 +36,13 @@ export interface UserState {
   accessToken: string
   refreshToken: string
   refreshTokenExpired: string
+  userId: number
+  token: string
+  roleId: number
+  roles: string[] | null
+  userName: string
+  nickName: string
+  avatar: string
 }
 
 export interface AppConfigState {

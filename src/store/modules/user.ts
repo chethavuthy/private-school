@@ -30,9 +30,9 @@ const useUserStore = defineStore('user-info', {
     isTokenExpire() {
       return !this.token
     },
-    changeNickName(newNickName: string) {
-      this.nickName = newNickName
-    },
+    // changeNickName(newNickName: string) {
+    //   this.nickName = newNickName
+    // },
     logout() {
       return new Promise<void>((resolve) => {
         this.$reset()
@@ -45,9 +45,9 @@ const useUserStore = defineStore('user-info', {
   presist: {
     enable: true,
     resetToState: true,
-    option: {
-      exclude: ['userName'],
-    },
+    // option: {
+    //   exclude: ['userName'],
+    // },
   },
 })
 

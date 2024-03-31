@@ -124,7 +124,7 @@
       const onLogin = () => {
         loading.value = true
         post({
-          url: SystemUser.login,
+          url: SystemUser.LOGIN,
           data: {
             email: email.value,
             password: password.value,

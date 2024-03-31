@@ -19,7 +19,7 @@
               </div>
             </div>
             <div class="text-xl">
-              {{ nickName }}
+              <!-- {{ nickName }} -->
             </div>
             <div class="des-wrapper">
               <i class="el-icon-edit"></i>
@@ -207,7 +207,7 @@
           },
         ],
         avatar: userStore.avatar,
-        nickName: userStore.nickName,
+        // nickName: userStore.nickName,
         avatarTouchStart,
         uploadAvatar,
       }
