@@ -8,6 +8,9 @@
           @search="onSearch"
           @reset-search="onResetSearch"
         >
+          <template #top-right>
+            <AddButton @add="onAddItem" />
+          </template>
           <template #search-content>
             <DataForm
               ref="searchForm"
@@ -35,14 +38,26 @@
         <TableFooter :pagination="pagination" />
       </template>
     </TableBody>
+    <ModalDialog ref="modalDialog" @confirm="onDataFormConfirm" :title="title">
+      <template #content>
+        <DataForm ref="itemDataFormRef" :options="itemFormOptions" />
+      </template>
+    </ModalDialog>
   </div>
 </template>
 
 <script lang="ts">
-  import { get } from '@/api/http'
-  import { SystemUser } from '@/api/url'
+  import { get, post, put, del } from '@/api/http'
+  import { SystemUser, Role } from '@/api/url'
   import { renderTag } from '@/hooks/form'
-  import { usePagination, useRowKey, useTable, useTableColumn, useTableHeight } from '@/hooks/table'
+  import {
+    usePagination,
+    useRowKey,
+    useTable,
+    useTableColumn,
+    useTableHeight,
+    useRenderAction,
+  } from '@/hooks/table'
   import { DataFormType, FormItem } from '@/types/components'
   import {
     DataTableColumn,
@@ -56,12 +71,18 @@
     NTimePicker,
     SelectOption,
     useMessage,
+    useDialog,
+    NUpload,
+    NModal,
+    NImage,
+    type UploadFileInfo,
   } from 'naive-ui'
-  import { defineComponent, h, onMounted, ref } from 'vue'
+  import { defineComponent, h, onMounted, computed, ref, nextTick } from 'vue'
+  import { FormAction, DoneAction } from '@/types/components'
   const conditionItems: Array<FormItem> = [
     {
-      key: 'name',
-      label: 'Name',
+      key: 'filterKeyword',
+      label: 'Keyword',
       value: ref(null),
       render: (formItem) => {
         return h(NInput, {
@@ -69,64 +90,7 @@
           onUpdateValue: (val) => {
             formItem.value.value = val
           },
-          placeholder: 'Please type in name',
-        })
-      },
-    },
-    {
-      key: 'status',
-      label: 'Status',
-      value: ref(null),
-      optionItems: [
-        {
-          label: 'Approve',
-          value: 0,
-        },
-        {
-          label: 'Reject',
-          value: 1,
-        },
-      ],
-      render: (formItem) => {
-        return h(NSelect, {
-          options: formItem.optionItems as Array<SelectOption>,
-          value: formItem.value.value,
-          placeholder: 'Please select status',
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
-        })
-      },
-    },
-    {
-      key: 'date',
-      label: 'Date',
-      value: ref(null),
-      render: (formItem) => {
-        return h(NDatePicker, {
-          value: formItem.value.value,
-          placeholder: 'Please select the date',
-          style: 'width: 100%',
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
-          type: 'date',
-        })
-      },
-    },
-    {
-      key: 'time',
-      label: 'Time',
-      value: ref(null),
-      render: (formItem) => {
-        return h(NTimePicker, {
-          options: formItem.optionItems as Array<SelectOption>,
-          value: formItem.value.value,
-          placeholder: 'Please select time',
-          style: 'width: 100%',
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
+          placeholder: 'Please type in filter keywords',
         })
       },
     },
@@ -154,12 +118,105 @@
   export default defineComponent({
     name: 'SystemUserHome',
     setup() {
+      const RoleOptions = ref<SelectOption[]>([])
+      const fileList = ref<UploadFileInfo[]>([])
+      const title = ref(FormAction.ADD)
+      const selectedId = ref('')
       const searchForm = ref<DataFormType | null>(null)
+      const itemDataFormRef = ref<DataFormType | null>(null)
+      const modalDialog = ref<ModalDialogType | null>(null)
       const pagination = usePagination(doRefresh)
       pagination.pageSize = 20
+      const naiveDialog = useDialog()
       const table = useTable<TableData>()
       const message = useMessage()
       const rowKey = useRowKey('id')
+      const itemFormOptions = computed(
+        () =>
+          [
+            {
+              key: 'fullName',
+              label: 'Full Name',
+              type: 'input',
+              value: ref(null),
+              render: (formItem) => {
+                return h(NInput, {
+                  value: formItem.value.value,
+                  onUpdateValue: (newVal) => {
+                    formItem.value.value = newVal
+                  },
+                  maxlength: 50,
+                  placeholder: 'Please enter the full name',
+                })
+              },
+              validator: (formItem, message) => {
+                if (!formItem.value.value) {
+                  message.error('Please enter the full name')
+                  return false
+                }
+                return true
+              },
+            },
+            {
+              key: 'email',
+              label: 'Email',
+              type: 'input',
+              multiple: true,
+              value: ref(null),
+              render: (formItem) => {
+                return h(NInput, {
+                  value: formItem.value.value,
+                  onUpdateValue: (newVal) => {
+                    formItem.value.value = newVal
+                  },
+                  maxlength: 50,
+                  placeholder: 'Please enter the email',
+                })
+              },
+            },
+            {
+              key: 'password',
+              label: 'Password',
+              type: 'input',
+              value: ref(null),
+              render: (formItem) => {
+                return h(NInput, {
+                  value: formItem.value.value,
+                  onUpdateValue: (newVal) => {
+                    formItem.value.value = newVal
+                  },
+                  type: 'password',
+                  placeholder: 'Please enter the password',
+                })
+              },
+            },
+            {
+              key: 'role',
+              label: 'Role',
+              type: 'select',
+              value: ref(null),
+              optionItems: RoleOptions.value,
+              render: (formItem) => {
+                return h(NSelect, {
+                  value: formItem.value.value,
+                  onUpdateValue: (newVal) => {
+                    formItem.value.value = newVal
+                  },
+                  placeholder: 'Please select categories',
+                  clearable: true,
+                  options: formItem.optionItems as SelectOption[],
+                })
+              },
+              validator: (formItem, message) => {
+                if (!formItem.value.value) {
+                  message.error('Please select business types')
+                  return false
+                }
+                return true
+              },
+            },
+          ] as Array<FormItem>
+      )
       const tableColumns = useTableColumn(
         [
           // table.selectionColumn,
@@ -193,17 +250,106 @@
               return h('div', new Date(rowData.createdAt).toLocaleString())
             },
           },
+          {
+            title: 'Actions',
+            key: 'actions',
+            render: (rowData) => {
+              return useRenderAction([
+                // {
+                //   label: 'Edit',
+                //   onClick: onUpdateItem.bind(null, rowData),
+                // },
+                {
+                  label: 'Delete',
+                  type: 'error',
+                  onClick() {
+                    onDeleteItem(rowData)
+                  },
+                },
+              ] as TableActionModel[])
+            },
+          },
         ],
         {
           align: 'center',
         } as DataTableColumn
       )
+      function customRequest({ file }: UploadCustomRequestOptions) {
+        return new Promise((resolve, reject) => {
+          const formData = new FormData()
+          formData.append('file', file?.file)
+          post({
+            url: '/file/upload',
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+            .then((res) => {
+              resolve(res)
+            })
+            .catch((error) => {
+              reject(error)
+            })
+        })
+      }
+      function onAddItem() {
+        title.value = FormAction.ADD
+        modalDialog.value?.toggle()
+        nextTick(() => {
+          itemDataFormRef.value?.reset()
+        })
+      }
+      function onDataFormConfirm() {
+        if (itemDataFormRef.value?.validator()) {
+          const action = title.value === FormAction.ADD ? post : put
+          const url =
+            title.value === FormAction.ADD
+              ? SystemUser.CREATE
+              : `${SystemUser.UPDATE}/${selectedId.value}`
+
+          action({
+            url,
+            data: {
+              ...itemDataFormRef.value?.generatorParams(),
+              thumbnail: fileList.value[0]?.id,
+            },
+          })
+            .then(() => {
+              message.success(`${DoneAction[title.value] || 'Operated'} successfully`)
+            })
+            .catch((error) => {
+              message.error(error.message)
+            })
+            .finally(() => {
+              modalDialog.value?.toggle()
+              doRefresh()
+            })
+        }
+      }
+      function onUpdateItem(item: any) {
+        title.value = FormAction.EDIT
+        selectedId.value = item._id
+        modalDialog.value?.toggle()
+        nextTick(() => {
+          itemFormOptions.value.forEach((it) => {
+            const key = it.key
+            const propName = item[key]
+            if (it.key === 'role') {
+              it.value.value = propName._id
+            } else {
+              it.value.value = propName
+            }
+          })
+        })
+      }
       function doRefresh() {
         get({
           url: SystemUser.LIST,
           data: () => ({
             page: pagination.page,
             limit: pagination.pageSize,
+            ...searchForm.value?.generatorParams(),
           }),
         })
           .then((res) => {
@@ -212,8 +358,28 @@
           })
           .catch(console.log)
       }
+      const onDeleteItem = (item: any) => {
+        naiveDialog.warning({
+          title: FormAction.DELETE,
+          content: 'Are you sure you want to delete?',
+          positiveText: 'Delete',
+          negativeText: 'Close',
+          onPositiveClick: () => {
+            del({
+              url: `${SystemUser.DELETE}/${item._id}`,
+            })
+              .then(() => {
+                message.success('Deleted successfully')
+                doRefresh()
+              })
+              .catch((error) => {
+                message.error(error.message)
+              })
+          },
+        })
+      }
       function onSearch() {
-        message.success('Params: ' + JSON.stringify(searchForm.value?.generatorParams()))
+        doRefresh()
       }
       function onResetSearch() {
         searchForm.value?.reset()
@@ -231,7 +397,28 @@
         conditionItems,
         onSearch,
         onResetSearch,
+        itemFormOptions,
+        onDataFormConfirm,
+        modalDialog,
+        itemDataFormRef,
+        onAddItem,
+        title,
+        onDeleteItem,
+        RoleOptions,
+        fileList,
       }
+    },
+    async created() {
+      get({
+        url: Role.LIST,
+      })
+        .then((res) => {
+          this.RoleOptions = res?.data?.map((it) => ({
+            label: it.title,
+            value: it._id,
+          }))
+        })
+        .catch(console.log)
     },
   })
 </script>

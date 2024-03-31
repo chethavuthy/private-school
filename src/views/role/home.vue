@@ -314,8 +314,8 @@
                 message.success('Deleted successfully')
                 doRefresh()
               })
-              .catch(() => {
-                message.error('Delete failed')
+              .catch((error) => {
+                message.error(error.message)
               })
           },
         })

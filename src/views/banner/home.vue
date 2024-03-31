@@ -42,7 +42,7 @@
       ref="modalDialog"
       @confirm="onDataFormConfirm"
       :title="title"
-      contentHeight="22rem"
+      contentHeight="20rem"
     >
       <template #content>
         <DataForm ref="itemDataFormRef" :options="itemFormOptions" />
@@ -53,7 +53,7 @@
 
 <script lang="ts">
   import { get, post, put, del } from '@/api/http'
-  import { Category, Poster } from '@/api/url'
+  import { Category, Banner } from '@/api/url'
   import { renderTag, renderSwitch } from '@/hooks/form'
   import {
     usePagination,
@@ -81,12 +81,10 @@
     NModal,
     NImage,
     NSwitch,
-    NAutoComplete,
     type UploadFileInfo,
   } from 'naive-ui'
   import { defineComponent, h, onMounted, computed, ref, nextTick } from 'vue'
   import { FormAction, DoneAction } from '@/types/components'
-  import naturalLanguages from '@/constants/natural-languages.json'
   const conditionItems: Array<FormItem> = [
     {
       key: 'filterKeyword',
@@ -225,60 +223,11 @@
               },
             },
             {
-              key: 'price',
-              label: 'Price',
-              type: 'input',
-              value: ref(null),
-              render: (formItem) => {
-                return h(NInput, {
-                  value: formItem.value.value,
-                  onUpdateValue: (newVal) => {
-                    formItem.value.value = newVal
-                  },
-                  placeholder: 'Please enter the price',
-                })
-              },
-              validator: (formItem, message) => {
-                if (!formItem.value.value) {
-                  message.error('Please enter the price')
-                  return false
-                }
-                return true
-              },
-            },
-            {
-              key: 'language',
-              label: 'Language',
-              type: 'select',
-              value: ref(null),
-              optionItems: [
-                {
-                  label: 'english',
-                  value: 'english',
-                },
-                {
-                  label: 'khmer',
-                  value: 'khmer',
-                },
-              ],
-              render: (formItem) => {
-                return h(NSelect, {
-                  value: formItem.value.value,
-                  onUpdateValue: (newVal) => {
-                    formItem.value.value = newVal
-                  },
-                  placeholder: 'Please select language',
-                  clearable: true,
-                  options: formItem.optionItems as SelectOption[],
-                })
-              },
-              validator: (formItem, message) => {
-                if (!formItem.value.value) {
-                  message.error('Please select language')
-                  return false
-                }
-                return true
-              },
+              key: 'isSlider',
+              label: 'Is Slider',
+              type: 'switch',
+              value: ref(false),
+              render: (formItem) => renderSwitch(formItem.value),
             },
           ] as Array<FormItem>
       )
@@ -340,18 +289,12 @@
               ),
           },
           {
-            title: 'Price',
-            key: 'price',
-          },
-          {
-            title: 'Language',
-            key: 'language',
-            render(rowData) {
-              return renderTag(rowData?.language, {
-                type: 'success',
-                size: 'small',
-              })
-            },
+            title: 'Type',
+            key: 'isSlider',
+            render: (rowData) =>
+              renderTag(rowData.isSlider ? 'Slider Banner' : 'Single Banner', {
+                type: rowData.isSlider ? 'success' : 'warning',
+              }),
           },
           {
             title: 'Created At',
@@ -367,25 +310,25 @@
               return h('div', new Date(rowData.createdAt).toLocaleString())
             },
           },
-          {
-            title: 'Actions',
-            key: 'actions',
-            render: (rowData) => {
-              return useRenderAction([
-                {
-                  label: 'Edit',
-                  onClick: onUpdateItem.bind(null, rowData),
-                },
-                {
-                  label: 'Delete',
-                  type: 'error',
-                  onClick() {
-                    onDeleteItem(rowData)
-                  },
-                },
-              ] as TableActionModel[])
-            },
-          },
+          // {
+          //   title: 'Actions',
+          //   key: 'actions',
+          //   render: (rowData) => {
+          //     return useRenderAction([
+          //       {
+          //         label: 'Edit',
+          //         onClick: onUpdateItem.bind(null, rowData),
+          //       },
+          //       {
+          //         label: 'Delete',
+          //         type: 'error',
+          //         onClick() {
+          //           onDeleteItem(rowData)
+          //         },
+          //       },
+          //     ] as TableActionModel[])
+          //   },
+          // },
         ],
         {
           align: 'center',
@@ -421,14 +364,11 @@
         if (itemDataFormRef.value?.validator()) {
           const action = title.value === FormAction.ADD ? post : put
           const url =
-            title.value === FormAction.ADD ? Poster.CREATE : `${Poster.UPDATE}/${selectedId.value}`
+            title.value === FormAction.ADD ? Banner.CREATE : `${Banner.UPDATE}/${selectedId.value}`
 
           action({
             url,
-            data: {
-              ...itemDataFormRef.value?.generatorParams(),
-              attachmentId: fileList.value[0]?.id,
-            },
+            data: itemDataFormRef.value?.generatorParams(),
           })
             .then(() => {
               message.success(`${DoneAction[title.value] || 'Operated'} successfully`)
@@ -470,7 +410,7 @@
       }
       function doRefresh() {
         get({
-          url: Poster.LIST,
+          url: Banner.LIST,
           data: () => ({
             page: pagination.page,
             limit: pagination.pageSize,
@@ -491,7 +431,7 @@
           negativeText: 'Close',
           onPositiveClick: () => {
             del({
-              url: `${Poster.DELETE}/${item._id}`,
+              url: `${Banner.DELETE}/${item._id}`,
             })
               .then(() => {
                 message.success('Deleted successfully')
@@ -531,7 +471,6 @@
         onDeleteItem,
         categoryOptions,
         fileList,
-        naturalLanguages,
       }
     },
     async created() {
