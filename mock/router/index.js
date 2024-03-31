@@ -50,8 +50,8 @@ export const adminRoutes = [
     isSingle: true,
     children: [
       {
-        parentPath: '/home',
-        menuUrl: '/other/clipboard',
+        parentPath: '/category',
+        menuUrl: '/category/home',
         menuName: 'Category',
         routeName: 'home',
       },
