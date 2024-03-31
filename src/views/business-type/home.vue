@@ -129,7 +129,7 @@
   export default defineComponent({
     name: 'BusinessTypeHome',
     setup() {
-      const title = ref('Add')
+      const title = ref(FormAction.ADD)
       const selectedId = ref('')
       const searchForm = ref<DataFormType | null>(null)
       const itemDataFormRef = ref<DataFormType | null>(null)
@@ -229,13 +229,13 @@
           })
         })
       }
-      function doRefresh(filters: any) {
+      function doRefresh() {
         get({
           url: BusinessType.LIST,
           data: () => ({
             page: pagination.page,
             limit: pagination.pageSize,
-            ...filters,
+            ...searchForm.value?.generatorParams(),
           }),
         })
           .then((res) => {
@@ -265,8 +265,7 @@
         })
       }
       function onSearch() {
-        doRefresh(searchForm.value?.generatorParams())
-        // message.success('Params: ' + JSON.stringify(searchForm.value?.generatorParams()))
+        doRefresh()
       }
       function onResetSearch() {
         searchForm.value?.reset()

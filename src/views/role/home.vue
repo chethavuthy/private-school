@@ -8,6 +8,9 @@
           @search="onSearch"
           @reset-search="onResetSearch"
         >
+          <template #top-right>
+            <AddButton @add="onAddItem" />
+          </template>
           <template #search-content>
             <DataForm
               ref="searchForm"
@@ -35,14 +38,26 @@
         <TableFooter :pagination="pagination" />
       </template>
     </TableBody>
+    <ModalDialog ref="modalDialog" @confirm="onDataFormConfirm" :title="title">
+      <template #content>
+        <DataForm ref="itemDataFormRef" :options="itemFormOptions" />
+      </template>
+    </ModalDialog>
   </div>
 </template>
 
 <script lang="ts">
-  import { get } from '@/api/http'
+  import { get, post, put, del } from '@/api/http'
   import { Role } from '@/api/url'
   import { renderTag } from '@/hooks/form'
-  import { usePagination, useRowKey, useTable, useTableColumn, useTableHeight } from '@/hooks/table'
+  import {
+    usePagination,
+    useRowKey,
+    useTable,
+    useTableColumn,
+    useTableHeight,
+    useRenderAction,
+  } from '@/hooks/table'
   import { DataFormType, FormItem } from '@/types/components'
   import {
     DataTableColumn,
@@ -56,12 +71,14 @@
     NTimePicker,
     SelectOption,
     useMessage,
+    useDialog,
   } from 'naive-ui'
-  import { defineComponent, h, onMounted, ref } from 'vue'
+  import { defineComponent, h, onMounted, ref, nextTick } from 'vue'
+  import { FormAction, DoneAction } from '@/types/components'
   const conditionItems: Array<FormItem> = [
     {
-      key: 'name',
-      label: 'Name',
+      key: 'filterKeyword',
+      label: 'Keyword',
       value: ref(null),
       render: (formItem) => {
         return h(NInput, {
@@ -69,117 +86,72 @@
           onUpdateValue: (val) => {
             formItem.value.value = val
           },
-          placeholder: 'Please type in name',
+          placeholder: 'Please type in filter keywords',
         })
       },
     },
+  ]
+
+  const itemFormOptions = [
     {
-      key: 'status',
-      label: 'Status',
+      key: 'title',
+      label: 'Title',
+      type: 'input',
+      value: ref(null),
+      render: (formItem) => {
+        return h(NInput, {
+          value: formItem.value.value,
+          onUpdateValue: (newVal) => {
+            formItem.value.value = newVal
+          },
+          maxlength: 50,
+          placeholder: 'Please enter the title',
+        })
+      },
+      validator: (formItem, message) => {
+        if (!formItem.value.value) {
+          message.error('Please enter the title')
+          return false
+        }
+        return true
+      },
+    },
+    {
+      key: 'permissions',
+      label: 'Permissions',
+      type: 'select',
       value: ref(null),
       optionItems: [
         {
-          label: 'Approve',
-          value: 0,
+          label: 'manage',
+          value: 'manage',
         },
         {
-          label: 'Reject',
-          value: 1,
+          label: 'view',
+          value: 'view',
         },
       ],
       render: (formItem) => {
         return h(NSelect, {
-          options: formItem.optionItems as Array<SelectOption>,
+          multiple: true,
           value: formItem.value.value,
-          placeholder: 'Please select status',
-          onUpdateValue: (val) => {
-            formItem.value.value = val
+          onUpdateValue: (newVal) => {
+            formItem.value.value = newVal
           },
+          placeholder: 'Please select permissions',
+          clearable: true,
+          options: formItem.optionItems as SelectOption[],
         })
       },
-    },
-    {
-      key: 'date',
-      label: 'Date',
-      value: ref(null),
-      render: (formItem) => {
-        return h(NDatePicker, {
-          value: formItem.value.value,
-          placeholder: 'Please select the date',
-          style: 'width: 100%',
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
-          type: 'date',
-        })
+      validator: (formItem, message) => {
+        if (!formItem.value.value) {
+          message.error('Please select permissions')
+          return false
+        }
+        return true
       },
     },
-    {
-      key: 'time',
-      label: 'Time',
-      value: ref(null),
-      render: (formItem) => {
-        return h(NTimePicker, {
-          options: formItem.optionItems as Array<SelectOption>,
-          value: formItem.value.value,
-          placeholder: 'Please select time',
-          style: 'width: 100%',
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
-        })
-      },
-    },
-    // {
-    //   key: 'checkbox',
-    //   label: '复选',
-    //   value: ref(null),
-    //   optionItems: [
-    //     {
-    //       label: '选项1',
-    //       value: 0,
-    //     },
-    //     {
-    //       label: '选项2',
-    //       value: 1,
-    //     },
-    //   ],
-    //   render: (formItem) => {
-    //     return h(
-    //       NCheckboxGroup,
-    //       {
-    //         options: formItem.optionItems as Array<SelectOption>,
-    //         value: formItem.value.value,
-    //         placeholder: '请选择用户姓别',
-    //         onUpdateValue: (val) => {
-    //           formItem.value.value = val
-    //         },
-    //       },
-    //       {
-    //         default: () => {
-    //           return h(
-    //             NSpace,
-    //             {
-    //               itemStyle: 'display: flex;',
-    //             },
-    //             {
-    //               default: () => {
-    //                 return formItem.optionItems?.map((it) => {
-    //                   return h(NCheckbox, {
-    //                     key: it.value,
-    //                     label: it.label,
-    //                     value: it.value,
-    //                   })
-    //                 })
-    //               },
-    //             }
-    //           )
-    //         },
-    //       }
-    //     )
-    //   },
-    // },
-  ]
+  ] as Array<FormItem>
 
   interface TableData {
     _id: string
@@ -194,9 +166,14 @@
   export default defineComponent({
     name: 'RoleHome',
     setup() {
+      const title = ref(FormAction.ADD)
+      const selectedId = ref('')
       const searchForm = ref<DataFormType | null>(null)
+      const itemDataFormRef = ref<DataFormType | null>(null)
+      const modalDialog = ref<ModalDialogType | null>(null)
       const pagination = usePagination(doRefresh)
       pagination.pageSize = 20
+      const naiveDialog = useDialog()
       const table = useTable<TableData>()
       const message = useMessage()
       const rowKey = useRowKey('id')
@@ -243,17 +220,78 @@
               return h('div', new Date(rowData.createdAt).toLocaleString())
             },
           },
+          {
+            title: 'Actions',
+            key: 'actions',
+            render: (rowData) => {
+              return useRenderAction([
+                {
+                  label: 'Edit',
+                  onClick: onUpdateItem.bind(null, rowData),
+                },
+                {
+                  label: 'Delete',
+                  type: 'error',
+                  onClick() {
+                    onDeleteItem(rowData)
+                  },
+                },
+              ] as TableActionModel[])
+            },
+          },
         ],
         {
           align: 'center',
         } as DataTableColumn
       )
+      function onAddItem() {
+        title.value = FormAction.ADD
+        modalDialog.value?.toggle()
+        nextTick(() => {
+          itemDataFormRef.value?.reset()
+        })
+      }
+      function onDataFormConfirm() {
+        if (itemDataFormRef.value?.validator()) {
+          const action = title.value === FormAction.ADD ? post : put
+          const url =
+            title.value === FormAction.ADD ? Role.CREATE : `${Role.UPDATE}/${selectedId.value}`
+
+          action({
+            url,
+            data: itemDataFormRef.value?.generatorParams(),
+          })
+            .then(() => {
+              message.success(`${DoneAction[title.value] || 'Operated'} successfully`)
+            })
+            .catch((error) => {
+              message.error(error.message)
+            })
+            .finally(() => {
+              modalDialog.value?.toggle()
+              doRefresh()
+            })
+        }
+      }
+      function onUpdateItem(item: any) {
+        title.value = FormAction.EDIT
+        selectedId.value = item._id
+        modalDialog.value?.toggle()
+        nextTick(() => {
+          itemFormOptions.forEach((it) => {
+            const key = it.key
+            const propName = item[key]
+            it.value.value = propName
+          })
+        })
+      }
       function doRefresh() {
         get({
           url: Role.LIST,
           data: () => ({
             page: pagination.page,
             limit: pagination.pageSize,
+            ...searchForm.value?.generatorParams(),
           }),
         })
           .then((res) => {
@@ -262,8 +300,28 @@
           })
           .catch(console.log)
       }
+      const onDeleteItem = (item: any) => {
+        naiveDialog.warning({
+          title: FormAction.DELETE,
+          content: 'Are you sure you want to delete?',
+          positiveText: 'Delete',
+          negativeText: 'Close',
+          onPositiveClick: () => {
+            del({
+              url: `${Role.DELETE}/${item._id}`,
+            })
+              .then(() => {
+                message.success('Deleted successfully')
+                doRefresh()
+              })
+              .catch(() => {
+                message.error('Delete failed')
+              })
+          },
+        })
+      }
       function onSearch() {
-        message.success('Params: ' + JSON.stringify(searchForm.value?.generatorParams()))
+        doRefresh()
       }
       function onResetSearch() {
         searchForm.value?.reset()
@@ -281,6 +339,13 @@
         conditionItems,
         onSearch,
         onResetSearch,
+        itemFormOptions,
+        onDataFormConfirm,
+        modalDialog,
+        itemDataFormRef,
+        onAddItem,
+        title,
+        onDeleteItem,
       }
     },
   })
