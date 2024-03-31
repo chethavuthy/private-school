@@ -7,7 +7,7 @@
     <template #header>
       <n-skeleton text style="width: 50%" v-if="loading" />
       <template v-else>
-        <div class="text-sm">公司各部门人员数量</div>
+        <div class="text-sm">Company department personnel count</div>
       </template>
     </template>
     <div class="chart-item-container">
@@ -44,12 +44,12 @@
               },
             },
             indicator: [
-              { name: '销售', max: 50 },
-              { name: '管理', max: 5 },
-              { name: '技术', max: 4 },
-              { name: '客服', max: 3 },
-              { name: '人资', max: 5 },
-              { name: '运营', max: 10 },
+              { name: 'Sales', max: 50 },
+              { name: 'Management', max: 5 },
+              { name: 'Technology', max: 4 },
+              { name: 'Customer Service', max: 3 },
+              { name: 'Human Resources', max: 5 },
+              { name: 'Operations', max: 10 },
             ],
             radius: 60,
             nameGap: 8,

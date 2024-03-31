@@ -55,7 +55,7 @@
           />
         </n-grid-item>
       </n-grid>
-      <n-divider dashed>主题颜色</n-divider>
+      <n-divider dashed>Theme Color</n-divider>
       <n-grid class="colors-wrapper">
         <n-grid-item
           v-for="(item, index) of primaryColorList"
@@ -68,44 +68,44 @@
         />
       </n-grid>
       <div style="height: 20px"></div>
-      <n-divider dashed>菜单设置</n-divider>
+      <n-divider dashed>Menu Settings</n-divider>
       <div class="setting-item-wrapper">
-        <span style="width: 150px">菜单宽度</span>
+        <span style="width: 150px">Width</span>
         <n-input-number v-model:value="menuWidth" size="small" :min="200" :max="400" :step="10">
           <template #suffix>px</template>
         </n-input-number>
       </div>
-      <n-divider dashed>页面切换动画</n-divider>
+      <n-divider dashed>Page Animation</n-divider>
       <div class="setting-item-wrapper">
-        <span style="width: 100px">动画效果</span>
+        <span style="width: 100px">Effect</span>
         <n-select
           v-model:value="appConfig.pageAnim"
           :options="animOptions"
           @update:value="onAnimUpdate"
         />
       </div>
-      <n-divider dashed>按钮显示</n-divider>
+      <n-divider dashed>Button Display</n-divider>
       <div class="setting-item-wrapper">
-        <span>固定顶部导航</span>
+        <span>Fixed Top Navigation</span>
         <n-switch
           v-model:value="appConfig.isFixedNavBar"
           :disabled="appConfig.layoutMode === 'ttb'"
         />
       </div>
-      <div class="setting-item-wrapper">
-        <span>搜索</span>
+      <!-- <div class="setting-item-wrapper">
+        <span>Search</span>
         <n-switch v-model:value="appConfig.actionBar.isShowSearch" />
-      </div>
-      <div class="setting-item-wrapper">
-        <span>消息</span>
+      </div> -->
+      <!-- <div class="setting-item-wrapper">
+        <span>Notification</span>
         <n-switch v-model:value="appConfig.actionBar.isShowMessage" />
-      </div>
+      </div> -->
       <div class="setting-item-wrapper">
-        <span>刷新</span>
+        <span>Refresh</span>
         <n-switch v-model:value="appConfig.actionBar.isShowRefresh" />
       </div>
       <div class="setting-item-wrapper">
-        <span>全屏</span>
+        <span>Fullscreen</span>
         <n-switch v-model:value="appConfig.actionBar.isShowFullScreen" />
       </div>
       <n-divider />
@@ -295,19 +295,19 @@
       ])
       const animOptions = [
         {
-          label: '渐隐渐现',
+          label: 'Opacity',
           value: 'opacity',
         },
         {
-          label: '左右滑动',
+          label: 'Fade',
           value: 'fade',
         },
         {
-          label: '上下滑动',
+          label: 'Down',
           value: 'down',
         },
         {
-          label: '缩放效果',
+          label: 'Scale',
           value: 'scale',
         },
       ]

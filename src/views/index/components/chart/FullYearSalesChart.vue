@@ -7,7 +7,7 @@
     <template #header>
       <n-skeleton text style="width: 50%" v-if="loading" />
       <template v-else>
-        <div class="text-sm"> 半年销售额分析图（数据为模拟，只为演示效果） </div>
+        <div class="text-sm"> Half year sales analysis chart </div>
       </template>
     </template>
     <div class="chart-item-container">
@@ -30,7 +30,7 @@
     }
     return data
   }
-  const months = ['一月', '二月', '三月', '四月', '五月', '六月']
+  const months = ['January', 'February', 'March', 'April', 'May', 'June']
   export default defineComponent({
     name: 'FullYearSalesChart',
     setup() {
@@ -48,7 +48,10 @@
             containLabel: true,
           },
           legend: {
-            data: ['2019半年销售额', '2020半年销售额'],
+            data: [
+              'Sales revenue for the first half of 2023',
+              'Sales revenue for the first half of 2024',
+            ],
           },
           tooltip: {
             trigger: 'axis',
@@ -64,7 +67,7 @@
           series: [
             {
               type: 'line',
-              name: '2019半年销售额',
+              name: 'Sales revenue for the first half of 2023',
               stack: '总量',
               data: getData(),
               smooth: true,
@@ -97,7 +100,7 @@
             },
             {
               type: 'line',
-              name: '2020半年销售额',
+              name: 'Sales revenue for the first half of 2024',
               stack: '总量',
               data: getData(),
               smooth: true,

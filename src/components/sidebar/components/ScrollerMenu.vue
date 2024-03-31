@@ -25,7 +25,7 @@
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
   import { RouteRecordNormalized, useRoute, useRouter } from 'vue-router'
   import { isExternal } from '@/utils'
-  import { transfromMenu } from '@/store/help'
+  import { transformMenu } from '@/store/help'
 
   export default defineComponent({
     name: 'ScrollerMenu',
@@ -46,7 +46,7 @@
       handleExpandPath()
       function handleMenu(routes?: Array<RouteRecordNormalized>) {
         menuOptions.length = 0
-        const tempMenus = transfromMenu(routes || [])
+        const tempMenus = transformMenu(routes || [])
         menuOptions.push(...tempMenus)
       }
       function handleExpandPath() {

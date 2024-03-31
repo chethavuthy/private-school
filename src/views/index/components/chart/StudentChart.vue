@@ -7,7 +7,7 @@
     <template #header>
       <n-skeleton text style="width: 50%" v-if="loading" />
       <template v-else>
-        <div class="text-sm"> 半年招生对比图（单位：人） </div>
+        <div class="text-sm"> Half-year enrollment chart (Unit: People) </div>
       </template>
     </template>
     <div class="chart-item-container">
@@ -43,7 +43,7 @@
           },
           yAxis: {
             type: 'category',
-            data: ['一月', '二月', '三月', '四月', '五月', '六月'],
+            data: ['January', 'February', 'March', 'April', 'May', 'June'],
             boundaryGap: 0,
             axisTick: {
               show: false,

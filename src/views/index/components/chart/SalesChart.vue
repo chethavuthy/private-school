@@ -7,7 +7,7 @@
     <template #header>
       <n-skeleton text style="width: 50%" v-if="loading" />
       <template v-else>
-        <div class="text-sm">一周销售额（单位：万）</div>
+        <div class="text-sm">Weekly sales revenue (Unit: 10k)</div>
       </template>
     </template>
     <div class="chart-item-container">
@@ -42,7 +42,7 @@
           },
           xAxis: {
             type: 'category',
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周天'],
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             boundaryGap: false,
             splitLine: { show: false },
           },

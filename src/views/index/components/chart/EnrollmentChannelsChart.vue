@@ -7,7 +7,7 @@
     <template #header>
       <n-skeleton text style="width: 50%" v-if="loading" />
       <template v-else>
-        <div class="text-sm">招生渠道分析图</div>
+        <div class="text-sm">Enrollment channel analysis chart</div>
       </template>
     </template>
     <div class="chart-item-container">
@@ -65,11 +65,11 @@
                 smooth: true,
               },
               data: [
-                { value: 1969, name: '线上' },
-                { value: 743, name: '互推' },
-                { value: 1594, name: '电话' },
-                { value: 1347, name: '地推' },
-                { value: 635, name: '直播' },
+                { value: 1969, name: 'Online' },
+                { value: 743, name: 'Cross promo' },
+                { value: 1594, name: 'Telephone' },
+                { value: 1347, name: 'Offline promo' },
+                { value: 635, name: 'Live streaming' },
               ],
             },
           ],

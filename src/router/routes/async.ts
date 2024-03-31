@@ -16,7 +16,7 @@ export const asyncRoutes = [
         name: 'Home',
         component: () => import('@/views/index/main.vue'),
         meta: {
-          title: '主控台',
+          title: 'Dashboard',
           affix: true,
           cacheable: true,
           iconPrefix: 'iconfont',

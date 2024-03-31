@@ -5,17 +5,15 @@
         <DataItem :data-model="item">
           <template v-if="index === 0" #extra="{ extra }">
             <div class="margin-top-lg">
-              <div> 较昨日新增：{{ extra.data }} </div>
-              <div class="margin-top-sm"> 较上周新增：{{ extra.data1 }} </div>
+              <div> New from yesterday: {{ extra.data }} </div>
+              <div class="margin-top-sm"> New from today: {{ extra.data1 }} </div>
             </div>
           </template>
           <template v-else-if="index === 1" #extra="{ extra }">
             <div class="margin-top" style="position: relative">
-              <div> 较昨日新增：{{ extra.data }} </div>
-              <div class="margin-top-sm"> 较上周新增：{{ extra.data1 }} </div>
-              <div class="stack-avatar-wrapper">
-                <!-- <StackAvatar /> -->
-              </div>
+              <div> New from yesterday: {{ extra.data }} </div>
+              <div class="margin-top-sm"> New from last week: {{ extra.data1 }} </div>
+              <div class="stack-avatar-wrapper"> </div>
             </div>
           </template>
           <template v-else-if="index === 2" #extra="{ extra }">
@@ -110,10 +108,10 @@
         fullYearSalesChart,
         dataList: [
           {
-            title: '今日访问量',
-            data: '+1000',
-            bottomTitle: '总访问量',
-            totalSum: '100万+',
+            title: 'Visits today',
+            data: '+1,000',
+            bottomTitle: 'Total visits',
+            totalSum: '100+',
             iconClass: 'data-chart',
             extra: {
               data: 1000,
@@ -121,10 +119,10 @@
             },
           },
           {
-            title: '新增用户',
+            title: 'New users',
             data: '+500',
-            bottomTitle: '总用户量',
-            totalSum: '200万+',
+            bottomTitle: 'Total users',
+            totalSum: '200+',
             iconClass: 'data-people',
             extra: {
               data: 700,
@@ -132,20 +130,20 @@
             },
           },
           {
-            title: '当月销售额',
-            data: '￥50000',
-            bottomTitle: '累计销售额',
-            totalSum: '2000万+',
+            title: 'Monthly sales',
+            data: '$50,000',
+            bottomTitle: 'Cumulative sales',
+            totalSum: '2,000+',
             iconClass: 'data-money',
             extra: {
               data: 80,
             },
           },
           {
-            title: '当月订单量',
-            data: '189笔',
-            bottomTitle: '累计订单量',
-            totalSum: '1万+',
+            title: 'Monthly order volume',
+            data: '189 Transactions',
+            bottomTitle: 'Cumulative order volume',
+            totalSum: '1,000+',
             iconClass: 'data-order',
             extra: {
               data: 80,

@@ -172,7 +172,7 @@ export function findCachedRoutes(routes: Array<RouteRecordRaw>) {
   return temp
 }
 
-export function transfromMenu(originRoutes: Array<RouteRecordRaw>): Array<MenuOption> {
+export function transformMenu(originRoutes: Array<RouteRecordRaw>): Array<MenuOption> {
   function getLabel(item: RouteRecordRaw) {
     if (isExternal(item.path as string)) {
       return () =>
@@ -214,19 +214,19 @@ export function transfromMenu(originRoutes: Array<RouteRecordRaw>): Array<MenuOp
           tempMenu.key = resolve(tempMenu.key as string, item.path)
           tempMenu.label =
             item.meta && item.meta.title ? getLabel(item as RouteRecordRaw) : tempMenu.label
-          tempMenu.icon =
-            item.meta && item.meta.icon
-              ? renderMenuIcon(
-                  item.meta
-                    ? item.meta.iconPrefix
-                      ? (item.meta.iconPrefix as string)
-                      : 'icon'
-                    : 'icon',
-                  item.meta?.icon
-                )
-              : tempMenu.icon
+          // tempMenu.icon =
+          //   item.meta && item.meta.icon
+          //     ? renderMenuIcon(
+          //         item.meta
+          //           ? item.meta.iconPrefix
+          //             ? (item.meta.iconPrefix as string)
+          //             : 'icon'
+          //           : 'icon',
+          //         item.meta?.icon
+          //       )
+          //     : tempMenu.icon
         } else {
-          tempMenu.children = transfromMenu(it.children as RouteRecordRaw[])
+          tempMenu.children = transformMenu(it.children as RouteRecordRaw[])
         }
       }
       tempMenus.push(tempMenu)

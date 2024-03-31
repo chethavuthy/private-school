@@ -5,8 +5,8 @@
 export default [
   {
     menuUrl: '/index',
-    menuName: 'Dashborad',
-    routeName: 'dashborad',
+    menuName: 'Dashboard',
+    routeName: 'dashboard',
     icon: 'icon-dashboard',
     parentPath: '',
     children: [
