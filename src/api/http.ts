@@ -29,9 +29,21 @@ function http<T = any>({ url, data, method, headers, beforeRequest, afterRequest
   beforeRequest && beforeRequest()
   method = method || 'GET'
   const params = Object.assign(typeof data === 'function' ? data() : data || {}, {})
-  return method === 'GET'
-    ? request.get(url, { params }).then(successHandler, failHandler)
-    : request.post(url, params, { headers: headers }).then(successHandler, failHandler)
+  // return method === 'GET'
+  //   ? request.get(url, { params }).then(successHandler, failHandler)
+  //   : request.post(url, params, { headers: headers }).then(successHandler, failHandler)
+
+  if (method === 'GET') {
+    return request.get(url, { params }).then(successHandler, failHandler)
+  } else if (method === 'POST') {
+    return request.post(url, params, { headers: headers }).then(successHandler, failHandler)
+  } else if (method === 'PUT') {
+    return request.put(url, params, { headers: headers }).then(successHandler, failHandler)
+  } else if (method === 'DELETE') {
+    return request.delete(url, { params }).then(successHandler, failHandler)
+  } else {
+    throw new Error(`Invalid method: ${method}`)
+  }
 }
 
 export function get<T = any>({
@@ -58,7 +70,6 @@ export function post<T = any>({
   beforeRequest,
   afterRequest,
 }: HttpOption): Promise<Response<T>> {
-  console.log('url', url)
   return http<T>({
     url,
     method,
