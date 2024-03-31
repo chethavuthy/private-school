@@ -35,6 +35,14 @@ export const BusinessType = {
   GET: '/business-type',
 }
 
+export const Role = {
+  CREATE: '/role/create',
+  LIST: '/role/list',
+  DELETE: '/role/delete',
+  UPDATE: '/role/update',
+  GET: '/role',
+}
+
 export const test = '/test'
 
 export const login = '/login'
