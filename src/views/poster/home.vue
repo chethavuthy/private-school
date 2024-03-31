@@ -197,6 +197,20 @@
             title: 'Name',
             key: 'name',
           },
+          {
+            title: 'Created At',
+            key: 'createdAt',
+            render: (rowData) => {
+              return h('div', new Date(rowData.createdAt).toLocaleString())
+            },
+          },
+          {
+            title: 'Updated At',
+            key: 'updatedAt',
+            render: (rowData) => {
+              return h('div', new Date(rowData.createdAt).toLocaleString())
+            },
+          },
           // {
           //   title: 'Status',
           //   key: 'status',

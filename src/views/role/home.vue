@@ -40,7 +40,7 @@
 
 <script lang="ts">
   import { get } from '@/api/http'
-  import { Category } from '@/api/url'
+  import { Role } from '@/api/url'
   import { renderTag } from '@/hooks/form'
   import { usePagination, useRowKey, useTable, useTableColumn, useTableHeight } from '@/hooks/table'
   import { DataFormType, FormItem } from '@/types/components'
@@ -180,13 +180,24 @@
     //   },
     // },
   ]
+
+  interface TableData {
+    _id: string
+    title: string
+    permissions: string[]
+    isDeleted: boolean
+    isDefault: boolean
+    createdAt: Date
+    updatedAt: Date
+  }
+
   export default defineComponent({
-    name: 'CategoryHome',
+    name: 'RoleHome',
     setup() {
       const searchForm = ref<DataFormType | null>(null)
       const pagination = usePagination(doRefresh)
       pagination.pageSize = 20
-      const table = useTable()
+      const table = useTable<TableData>()
       const message = useMessage()
       const rowKey = useRowKey('id')
       const tableColumns = useTableColumn(
@@ -194,8 +205,30 @@
           table.selectionColumn,
           table.indexColumn,
           {
-            title: 'Name',
-            key: 'name',
+            title: 'Title',
+            key: 'title',
+          },
+          {
+            title: 'Permission',
+            key: 'permission',
+            render: (rowData) =>
+              // loop render tags
+              h(
+                NSpace,
+                {
+                  itemStyle: 'display: flex;',
+                  justify: 'center',
+                },
+                {
+                  default: () =>
+                    rowData.permissions.map((it) => {
+                      return renderTag(it, {
+                        type: 'info',
+                        size: 'small',
+                      })
+                    }),
+                }
+              ),
           },
           {
             title: 'Created At',
@@ -250,15 +283,15 @@
           //   title: '上次登录IP',
           //   key: 'lastLoginIp',
           // },
-          {
-            title: 'Status',
-            key: 'status',
-            render: (rowData) =>
-              renderTag(!!rowData.status ? 'Approve' : 'Reject', {
-                type: !!rowData.status ? 'success' : 'error',
-                size: 'small',
-              }),
-          },
+          // {
+          //   title: 'Status',
+          //   key: 'status',
+          //   render: (rowData) =>
+          //     renderTag(!!rowData.status ? 'Approve' : 'Reject', {
+          //       type: !!rowData.status ? 'success' : 'error',
+          //       size: 'small',
+          //     }),
+          // },
         ],
         {
           align: 'center',
@@ -266,7 +299,7 @@
       )
       function doRefresh() {
         get({
-          url: Category.LIST,
+          url: Role.LIST,
           data: () => ({
             page: pagination.page,
             limit: pagination.pageSize,
