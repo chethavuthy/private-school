@@ -240,7 +240,7 @@
         })
           .then((res) => {
             table.handleSuccess(res)
-            pagination.setTotalSize(res.totalSize || 10)
+            pagination.setTotalSize(res?.total || 10)
           })
           .catch(console.log)
       }
