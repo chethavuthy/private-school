@@ -48,6 +48,22 @@ export const adminRoutes = [
     ],
   },
   {
+    menuUrl: '/request-design',
+    menuName: 'RequestDesign',
+    iconPrefix: 'iconfont',
+    icon: 'folder-view',
+    parentPath: '',
+    isSingle: true,
+    children: [
+      {
+        parentPath: '/request-design',
+        menuUrl: '/request-design/home',
+        menuName: 'Request Design',
+        routeName: 'RequestDesignHome',
+      },
+    ],
+  },
+  {
     menuUrl: '/category',
     menuName: 'Category',
     iconPrefix: 'iconfont',
