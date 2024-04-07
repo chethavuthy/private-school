@@ -48,6 +48,10 @@ export const Banner = {
   LIST: '/banner/admin/list',
 }
 
+export const RequestDesign = {
+  LIST: '/request-design/admin/list',
+}
+
 export const test = '/test'
 
 export const login = '/login'
