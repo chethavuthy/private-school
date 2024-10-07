@@ -2,55 +2,71 @@ import { baseURL } from './axios.config'
 
 export const baseAddress = baseURL
 
-export const SystemUser = {
-  CREATE: '/system-user/create',
-  LOGIN: '/system-user/login',
-  LIST: '/system-user/list',
-  DELETE: '/system-user/delete',
-  UPDATE: '/system-user/update',
-  GET: '/system-user',
+export const AUTH = {
+  LOGIN: '/auth/login',
+  REFRESH_TOKEN: '/auth/refresh-token',
+  CREATE_USER: '/user',
+  GET_USER: '/user',
+  UPDATE_USER: '/user',
+  CHANGE_PASSWORD: '/auth/account/change-password',
 }
 
-export const Category = {
-  CREATE: '/category/create',
-  LIST: '/category',
-  DELETE: '/category/delete',
-  UPDATE: '/category/update',
-  GET: '/category',
+export const STUDENT = {
+  CREATE: '/student',
+  LIST: '/student',
+  GET_ONE: '/student',
+  DELETE: '/student',
+  UPDATE: '/student',
 }
 
-export const Poster = {
-  CREATE: '/poster/admin/create',
-  LIST: '/poster/admin/list',
-  DELETE: '/poster/admin/delete',
-  UPDATE: '/poster/admin/update',
-  GET: '/poster/admin',
+export const BRANCH = {
+  CREATE: '/branch',
+  LIST: '/branch',
+  GET_ONE: '/branch',
+  DELETE: '/branch',
+  UPDATE: '/branch',
 }
 
-export const BusinessType = {
-  CREATE: '/business-type/create',
-  LIST: '/business-type/list',
-  DELETE: '/business-type/delete',
-  UPDATE: '/business-type/update',
-  GET: '/business-type',
-}
+// export const Category = {
+//   CREATE: '/category/create',
+//   LIST: '/category',
+//   DELETE: '/category/delete',
+//   UPDATE: '/category/update',
+//   GET: '/category',
+// }
 
-export const Role = {
-  CREATE: '/role/create',
-  LIST: '/role/list',
-  DELETE: '/role/delete',
-  UPDATE: '/role/update',
-  GET: '/role',
-}
+// export const Poster = {
+//   CREATE: '/poster/admin/create',
+//   LIST: '/poster/admin/list',
+//   DELETE: '/poster/admin/delete',
+//   UPDATE: '/poster/admin/update',
+//   GET: '/poster/admin',
+// }
 
-export const Banner = {
-  CREATE: '/banner/admin/create',
-  LIST: '/banner/admin/list',
-}
+// export const BusinessType = {
+//   CREATE: '/business-type/create',
+//   LIST: '/business-type/list',
+//   DELETE: '/business-type/delete',
+//   UPDATE: '/business-type/update',
+//   GET: '/business-type',
+// }
 
-export const RequestDesign = {
-  LIST: '/request-design/admin/list',
-}
+// export const Role = {
+//   CREATE: '/role/create',
+//   LIST: '/role/list',
+//   DELETE: '/role/delete',
+//   UPDATE: '/role/update',
+//   GET: '/role',
+// }
+
+// export const Banner = {
+//   CREATE: '/banner/admin/create',
+//   LIST: '/banner/admin/list',
+// }
+
+// export const RequestDesign = {
+//   LIST: '/request-design/admin/list',
+// }
 
 export const test = '/test'
 

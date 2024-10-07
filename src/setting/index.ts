@@ -7,7 +7,7 @@ import {
   ThemeMode,
 } from '@/store/types'
 
-export const projectName = 'KH Poster'
+export const projectName = 'Private School'
 
 export default {
   theme: ThemeMode.LIGHT,

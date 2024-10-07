@@ -3,6 +3,7 @@ import { UserState } from '../types'
 import store from '../pinia'
 
 import Avatar from '@/assets/img_avatar.gif'
+import { LoginResponse } from '@/types/auth'
 
 const defaultAvatar = Avatar
 
@@ -17,13 +18,13 @@ const useUserStore = defineStore('user-info', {
     }
   },
   actions: {
-    saveUser(userInfo: UserState) {
-      return new Promise<UserState>((resolve) => {
+    saveUser(userInfo: LoginResponse) {
+      return new Promise<LoginResponse>((resolve) => {
         this.token = userInfo.accessToken
         this.accessToken = userInfo.accessToken
         this.refreshToken = userInfo.refreshToken
-        this.refreshTokenExpired = userInfo.refreshTokenExpired
-        this.avatar = userInfo.avatar || defaultAvatar
+        // this.refreshTokenExpired = userInfo.refreshTokenExpired
+        // this.avatar = userInfo.avatar || defaultAvatar
         resolve(userInfo)
       })
     },

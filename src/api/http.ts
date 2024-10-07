@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { App } from 'vue'
 import request from './axios.config'
+import { Pagination } from '@/types/base'
 
 export interface HttpOption {
   url: string
@@ -12,10 +13,9 @@ export interface HttpOption {
 }
 
 export interface Response<T = any> {
-  totalSize: number | 0
-  code: number
-  msg: string
+  success: number
   data: T
+  pagination: Pagination
 }
 
 function http<T = any>({ url, data, method, headers, beforeRequest, afterRequest }: HttpOption) {
@@ -24,7 +24,7 @@ function http<T = any>({ url, data, method, headers, beforeRequest, afterRequest
   }
   const failHandler = (error: Response<Error>) => {
     afterRequest && afterRequest()
-    throw new Error(error.msg || 'Request failed with unknown exception!')
+    throw new Error('Request failed with unknown exception!')
   }
   beforeRequest && beforeRequest()
   method = method || 'GET'

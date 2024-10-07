@@ -34,7 +34,7 @@
             trigger: 'item',
           },
           radar: {
-            name: {
+            axisName: {
               textStyle: {
                 color: '#333',
                 fontSize: 10,
@@ -52,7 +52,7 @@
               { name: 'Operations', max: 10 },
             ],
             radius: 60,
-            nameGap: 8,
+            axisNameGap: 8,
           },
           series: [
             {

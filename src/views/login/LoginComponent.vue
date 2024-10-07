@@ -4,13 +4,14 @@
       <div class="left">
         <div class="content-wrapper !bg-primary">
           <div class="logo-wrapper !w-36">
-            <img src="../../assets/svg/logo.svg" />
+            <!-- <img src="../../assets/svg/logo.svg" /> -->
+             <p class="text-2xl text-white font-bold whitespace-nowrap">Private School</p>
           </div>
           <div class="sub-title">Designing in the cloud. Your ideas, everywhere.</div>
           <div class="flex-1 flex justify-center items-center ttppii">
             Design smarter, not harder.
           </div>
-          <div class="bottom-wrapper">KH Poster v{{ version }} · Made by KH Poster</div>
+          <div class="bottom-wrapper">Private School v{{ version }} · Made by Private School</div>
         </div>
       </div>
       <div class="right">
@@ -18,8 +19,8 @@
           <div class="form-title">Account Login</div>
           <div class="item-wrapper">
             <n-input
-              v-model:value="email"
-              placeholder="Please enter your email"
+              v-model:value="username"
+              placeholder="Please enter your username"
               prefix-icon="el-icon-user"
               clearable
             />
@@ -53,7 +54,7 @@
         <div class="mt-4 text-lg font-bold text-white"> Kh Poster </div>
       </div>
       <div class="content">
-        <n-input round placeholder="请输入用户名/手机号" size="large" v-model:value="email">
+        <n-input round placeholder="请输入用户名/手机号" size="large" v-model:value="username">
           <template #prefix>
             <n-icon>
               <PhoneIcon />
@@ -91,25 +92,23 @@
   import { computed, defineComponent, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { post, Response } from '@/api/http'
-  import { SystemUser } from '@/api/url'
-  import { DeviceType, UserState } from '@/store/types'
+  import { AUTH } from '@/api/url'
+  import { DeviceType } from '@/store/types'
   import { useMessage } from 'naive-ui'
   import {
     PhonePortraitOutline as PhoneIcon,
     LockClosedOutline as PasswordIcon,
-    LogoGithub,
-    LogoAlipay,
-    LogoWechat,
   } from '@vicons/ionicons5'
   import useAppInfo from '@/hooks/useAppInfo'
   import useUserStore from '@/store/modules/user'
   import useAppConfigStore from '@/store/modules/app-config'
+  import { LoginResponse } from '@/types/auth'
   export default defineComponent({
     name: 'Login',
-    components: { PhoneIcon, PasswordIcon, LogoGithub, LogoAlipay, LogoWechat },
+    components: { PhoneIcon, PasswordIcon },
     setup() {
       const { version } = useAppInfo()
-      const email = ref('')
+      const username = ref('')
       const password = ref('')
       const autoLogin = ref(true)
       const loading = ref(false)
@@ -124,14 +123,14 @@
       const onLogin = () => {
         loading.value = true
         post({
-          url: SystemUser.LOGIN,
+          url: AUTH.LOGIN,
           data: {
-            email: email.value,
+            username: username.value,
             password: password.value,
           },
         })
           .then(({ data }: Response) => {
-            userStore.saveUser(data as UserState).then(() => {
+            userStore.saveUser(data as LoginResponse).then(() => {
               router
                 .replace({
                   path: route.query.redirect ? (route.query.redirect as string) : '/',
@@ -150,7 +149,7 @@
       }
       return {
         isMobileScreen,
-        email,
+        username,
         password,
         autoLogin,
         loading,

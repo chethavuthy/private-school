@@ -78,7 +78,7 @@
       async function onConfirm() {
         loading.value = true
         await nextTick() // Wait for the loading state to be reflected in the UI
-        emit('confirm')
+        emit('confirm', loading)
       }
       function onCancel() {
         showModal.value = false

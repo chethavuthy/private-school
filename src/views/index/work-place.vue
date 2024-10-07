@@ -194,37 +194,37 @@
         currentDate: date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate(),
         dataItems: [
           {
-            title: 'KH Poster',
+            title: 'Private School',
             target: 'http://qingqingxuan.gitee.io/vue-admin-work',
             gitee: 'http://www.vueadminwork.com',
             ui: 'Element UI',
           },
           {
-            title: 'KH Poster',
+            title: 'Private School',
             target: 'http://qingqingxuan.gitee.io/vue-admin-work-x',
             gitee: 'http://www.vueadminwork.com',
             ui: 'Element Plus',
           },
           {
-            title: 'KH Poster',
+            title: 'Private School',
             target: 'http://qingqingxuan.gitee.io/admin-work',
             gitee: 'http://www.vueadminwork.com',
             ui: 'NaiveUI',
           },
           {
-            title: 'KH Poster',
+            title: 'Private School',
             target: 'http://qingqingxuan.gitee.io/admin-work',
             gitee: 'http://www.vueadminwork.com',
             ui: 'ArcoDesign',
           },
           {
-            title: 'KH Poster',
+            title: 'Private School',
             target: 'http://qingqingxuan.gitee.io/vue-admin-work-x',
             gitee: 'http://www.vueadminwork.com',
             ui: 'Antd',
           },
           {
-            title: 'KH Poster',
+            title: 'Private School',
             target: 'http://qingqingxuan.gitee.io/admin-work',
             gitee: 'http://www.vueadminwork.com',
             ui: 'NaiveUI',

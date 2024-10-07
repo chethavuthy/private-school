@@ -1,4 +1,4 @@
-import Axios, { AxiosResponse } from 'axios'
+import Axios, { AxiosRequestHeaders, AxiosResponse } from 'axios'
 import qs from 'qs'
 
 export const baseURL = import.meta.env.VITE_API_BASE_URL as string
@@ -18,7 +18,7 @@ const service = Axios.create({
 
 service.interceptors.request.use(
   (config) => {
-    !config.headers && (config.headers = {})
+    !config.headers && (config.headers = {} as AxiosRequestHeaders)
     if (!config.headers[CONTENT_TYPE]) {
       config.headers[CONTENT_TYPE] = APPLICATION_JSON
     }

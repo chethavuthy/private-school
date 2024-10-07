@@ -48,7 +48,7 @@
 
 <script lang="ts">
   import { get, post, put, del } from '@/api/http'
-  import { SystemUser, Role } from '@/api/url'
+  import { AUTH, Role } from '@/api/url'
   import { renderTag } from '@/hooks/form'
   import {
     usePagination,
