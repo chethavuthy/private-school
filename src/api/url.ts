@@ -19,12 +19,46 @@ export const STUDENT = {
   UPDATE: '/student',
 }
 
+export const SALE = {
+  CREATE: '/sale',
+  RESTOCK: '/sale/restock',
+  LIST: '/sale',
+  GET_ONE: '/sale',
+  DELETE: '/sale',
+  CANCEL: '/sale/cancel',
+}
+
+export const STOCKROOM = {
+  CREATE: '/stockroom',
+  RESTOCK: '/stockroom/restock',
+  LIST: '/stockroom',
+  GET_ONE: '/stockroom',
+  DELETE: '/stockroom',
+  CANCEL: '/stockroom/cancel',
+}
+
 export const BRANCH = {
   CREATE: '/branch',
   LIST: '/branch',
   GET_ONE: '/branch',
   DELETE: '/branch',
   UPDATE: '/branch',
+}
+
+export const PAYMENT = {
+  CREATE: '/payment',
+  LIST: '/payment',
+  GET_ONE: '/payment',
+  DELETE: '/payment',
+  UPDATE: '/payment',
+}
+
+export const ENROLLMENT = {
+  CREATE: '/enrollment',
+  LIST: '/enrollment',
+  GET_ONE: '/enrollment',
+  DELETE: '/enrollment',
+  UPDATE: '/enrollment',
 }
 
 export const SystemUser = {
